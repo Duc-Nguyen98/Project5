@@ -1,0 +1,720 @@
+﻿<!DOCTYPE html>
+<html ng-app="HoaDon">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+
+
+    <script src="/assets/js/core/libraries/jquery.min.js"></script>
+    <script src="/assets/js/angular-1.6.5/angular.min.js"></script>
+    <script src="appjs/appHD.js"></script>
+    <script src="appjs/HoaDon.js"></script>
+    <script src="/assets/js/dirPagination.js"></script>
+    <script src="/assets/js/core/libraries/jquery_ui/datepicker.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="MDB-Free_4.7.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="MDB-Free_4.7.3/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="MDB-Free_4.7.3/css/style.css" rel="stylesheet">
+
+
+
+    <style>
+        .breadcrumb > .active {
+            color: #999999;
+        }
+
+        .pagination {
+            display: inline-block;
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+
+            .pagination > li {
+                display: inline;
+            }
+
+                .pagination > li > a,
+                .pagination > li > span {
+                    position: relative;
+                    float: left;
+                    padding: 7px 12px;
+                    line-height: 1.5384616;
+                    text-decoration: none;
+                    color: #333333;
+                    background-color: #ffffff;
+                    border: 1px solid #dddddd;
+                    margin-left: -1px;
+                }
+
+                .pagination > li:first-child > a,
+                .pagination > li:first-child > span {
+                    margin-left: 0;
+                    border-bottom-left-radius: 3px;
+                    border-top-left-radius: 3px;
+                }
+
+                .pagination > li:last-child > a,
+                .pagination > li:last-child > span {
+                    border-bottom-right-radius: 3px;
+                    border-top-right-radius: 3px;
+                }
+
+                .pagination > li > a:hover,
+                .pagination > li > span:hover,
+                .pagination > li > a:focus,
+                .pagination > li > span:focus {
+                    z-index: 3;
+                    color: #333333;
+                    background-color: #f5f5f5;
+                    border-color: #dddddd;
+                }
+
+            .pagination > .active > a,
+            .pagination > .active > span,
+            .pagination > .active > a:hover,
+            .pagination > .active > span:hover,
+            .pagination > .active > a:focus,
+            .pagination > .active > span:focus {
+                z-index: 2;
+                color: #ffffff;
+                background-color: #2BBBAD;
+                border-color: #2BBBAD;
+                cursor: default;
+            }
+
+            .pagination > .disabled > span,
+            .pagination > .disabled > span:hover,
+            .pagination > .disabled > span:focus,
+            .pagination > .disabled > a,
+            .pagination > .disabled > a:hover,
+            .pagination > .disabled > a:focus {
+                color: #bbbbbb;
+                background-color: transparent;
+                border-color: #dddddd;
+                cursor: not-allowed;
+            }
+
+        .pagination-lg > li > a,
+        .pagination-lg > li > span {
+            padding: 9px 15px;
+            font-size: 14px;
+            line-height: 1.4285715;
+        }
+
+        .pagination-lg > li:first-child > a,
+        .pagination-lg > li:first-child > span {
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+
+        .pagination-lg > li:last-child > a,
+        .pagination-lg > li:last-child > span {
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .pagination-sm > li > a,
+        .pagination-sm > li > span {
+            padding: 6px 11px;
+            font-size: 12px;
+            line-height: 1.6666667;
+        }
+
+        .pagination-sm > li:first-child > a,
+        .pagination-sm > li:first-child > span {
+            border-bottom-left-radius: 2px;
+            border-top-left-radius: 2px;
+        }
+
+        .pagination-sm > li:last-child > a,
+        .pagination-sm > li:last-child > span {
+            border-bottom-right-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+
+        .pager {
+            padding-left: 0;
+            margin: 20px 0;
+            list-style: none;
+            text-align: center;
+        }
+
+            .pager li {
+                display: inline;
+            }
+
+                .pager li > a,
+                .pager li > span {
+                    display: inline-block;
+                    padding: 5px 14px;
+                    background-color: #ffffff;
+                    border: 1px solid #dddddd;
+                    border-radius: 3px;
+                }
+
+                    .pager li > a:hover,
+                    .pager li > a:focus {
+                        text-decoration: none;
+                        background-color: #2196f3;
+                    }
+
+            .pager .next > a,
+            .pager .next > span {
+                float: right;
+            }
+
+            .pager .previous > a,
+            .pager .previous > span {
+                float: left;
+            }
+
+            .pager .disabled > a,
+            .pager .disabled > a:hover,
+            .pager .disabled > a:focus,
+            .pager .disabled > span {
+                color: #bbbbbb;
+                background-color: #ffffff;
+                cursor: not-allowed;
+            }
+
+        td a.btn-floating.btn-lg.purple-gradient.waves-effect.waves-light {
+            text-align: center;
+            border-radius: 300px;
+            color: #fff;
+        }
+
+        td.ng-binding {
+            line-height: 55px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        th.th-sm {
+            font-size: 24px;
+            text-align: left;
+        }
+        /*from*/
+
+
+        .fromchinhsua input#form29 {
+            width: 57%;
+            float: right;
+            text-align: left;
+            margin-right: 0px;
+            padding: 1px;
+            padding-bottom: 0px;
+            border: none;
+            font-size: 17px;
+            border-bottom: 1px solid gray;
+        }
+
+
+        .fromchinhsua .modal-content {
+            width: 400px;
+            margin: auto;
+        }
+
+        .fromchinhsua p.textavatar {
+            width: 335px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-family: Tahoma;
+            font-weight: bold;
+            text-align: left;
+            color: #414141c9;
+            margin: auto;
+        }
+
+
+
+        .fromchinhsua h5.mt-1.mb-2.ng-binding {
+            color: #414141c9;
+            font-size: 24px;
+            font-family: tahoma;
+            font-weight: bold;
+            padding-bottom: 15px;
+            3
+        }
+
+        .fromchinhsua select.form-control.ng-pristine.ng-valid.ng-not-empty.ng-touched {
+            width: 200px;
+            float: right;
+            border: none;
+            border-bottom: 1px solid gray;
+        }
+
+        .fromchinhsua .md-form .form-control {
+            width: 200px;
+            border: none;
+            float: right;
+            border-bottom: 1px solid gray;
+            margin: auto;
+        }
+
+        .fromchinhsua h4 {
+            text-align: center;
+            font-size: 40px;
+            font-family: tahoma;
+        }
+
+        .fromchinhsua button.btn.btn-default.waves-effect.waves-light {
+            float: right;
+            text-transform: uppercase;
+        }
+        /*End from*/
+        i.fas.fa-phone-volume.prefix.grey-text {
+            transform: rotate(-18deg);
+            font-size: 35px;
+        }
+
+        button.btn.btn-unique.waves-effect.waves-light {
+            background-color: #2bbbad !important;
+            color: #fff;
+        }
+
+        h4.modal-title.w-100.font-weight-bold {
+            color: #2BBBAD;
+            text-transform: uppercase;
+        }
+
+        span.Authority {
+            font-size: 25px;
+        }
+
+        i.grey-text {
+            color: #2BBBAD !important;
+        }
+
+        button.btn.btn-default.waves-effect.waves-light {
+            float: left;
+            display: inline-block;
+            margin-top: 2%;
+        }
+        /*Tìm Kiếm*/
+        i.fas.fa-search.fa-2x {
+            font-size: 27px;
+            color: #2BBBAD;
+        }
+
+        button.btn.btn-cyan.mt-1.waves-effect.waves-light {
+            background: #eb4d4b !important;
+        }
+
+        button.btn.btn-cyan.mt-1.nutclose.waves-effect.waves-light {
+            background: #33b5e5 !important;
+        }
+
+        button.btn.btn-cyan.mt-1.nutxanh.waves-effect.waves-light {
+            background: #00bcd4 !important;
+        }
+        /*From Chinh Sua*/
+        .chinhsuanhe.modal-dialog {
+            max-width: 69%;
+        }
+
+        span.trongthei {
+            font-size: 25px;
+            padding: 0px 15px;
+            font-weight: 700;
+        }
+
+        input::placeholder {
+            font-style: italic;
+            padding: 0 5px;
+        }
+
+        input#timkiem::placeholder {
+            color: #80808080;
+            font-size: 20px;
+            font-style: italic;
+            text-align: left;
+            padding: 0 5px;
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        th.th-sm {
+            text-align: center;
+        }
+
+        .ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+            text-align: center;
+            background: #2BBBAD;
+            width: 310px;
+        }
+
+        table.ui-datepicker-calendar {
+            background: #2BBBAD !important;
+            color: #fff;
+            width: 310px;
+            font-family: tahoma;
+        }
+
+        a.ui-state-default {
+            color: #ffff;
+            display: block;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        a.ui-state-default:hover {
+            color: #2BBBAD;
+            background: #fff;
+            
+        }
+
+        span.ui-icon.ui-icon-circle-triangle-e {
+            float: right;
+            font-size: 20px;
+            padding: 5px 10px;
+            color: #ffffffc9;
+            font-family: sans-serif;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        span.ui-icon.ui-icon-circle-triangle-e:hover{
+            color:#fff;
+        }
+
+        span.ui-icon.ui-icon-circle-triangle-w {
+            float: left;
+            font-size: 20px;
+            padding: 5px 10px;
+            color: #ffffffc9;
+            font-family: sans-serif;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        span.ui-icon.ui-icon-circle-triangle-w:hover {
+            color: #fff;
+        }
+
+        .ui-datepicker-title {
+            padding: 15px 0px;
+            text-align: center;
+            font-size: 25px;
+            color: #ffffffc9;
+            font-family: sans-serif;
+        }
+
+        input#form29 {
+            text-align: right;
+        }
+
+
+    </style>
+</head>
+<body ng-controller="mycontroller">
+
+    <div class="container-fluid">
+
+        <!-- Nút tạo mới và from-->
+        <div class="taomoi">
+        <button class="btn btn-default" data-toggle="modal" data-target="#fromtaomoi"  ng-click="item={}">
+            Create New <i class="fas fa-magic ml-1"></i>
+        </button>
+
+
+        <div class="modal fade" id="fromtaomoi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="chinhsuanhe modal-dialog" role="document">
+                <div class="modal-content" style="margin-top: 5%;">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Create new bill</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                        <div class="container-fluid">
+                            <div class="row  my-3">
+
+                                <div class="col-sm-2"></div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-tags fa-2x mb-3 prefix grey-text "><span class="trongthei">ID Customer</span></i>
+                                    <input type="number" placeholder=" Example: 1111" id="form29" class="form-control validate" ng-model="item.MaKhachHang">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-tags fa-2x mb-3 prefix grey-text "><span class="trongthei">ID Employee</span></i>
+                                    <input type="number" placeholder="Example: 1000" id="form29" class="form-control validate" ng-model="item.MaNhanVien">
+
+                                </div>
+                                <div class="col-sm-2"></div>
+
+                            </div>
+                            <div class="row  my-3">
+
+                                <div class="col-sm-2"></div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-tags fa-2x mb-3 prefix grey-text "><span class="trongthei">ID Product</span></i>
+                                    <input type="number" placeholder=" Example: 1111" id="form29" class="form-control validate" ng-model="item.MaHang">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-cube fa-2x mb-3 prefix grey-text "><span class="trongthei">Product Name</span></i>
+                                    <input type="text" placeholder="Example: IPhone 5S" id="form29" class="form-control validate" ng-model="item.TenHang">
+
+                                </div>
+
+                                <div class="col-sm-2"></div>
+
+                            </div>
+                            <div class="row  my-3">
+
+                                <div class="col-sm-2"></div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-balance-scale fa-2x mb-3 prefix grey-text "><span class="trongthei">Quantity</span></i>
+                                    <input type="number" placeholder=" Example: 100" id="form29" class="form-control validate" ng-model="item.SoLuong">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-dollar-sign fa-2x mb-3 prefix grey-text "><span class="trongthei">Unit Price</span></i>
+                                    <input type="number" placeholder=" Example: 25000$" id="form29" class="form-control validate" ng-model="item.DonGia">
+                                </div>
+
+                                <div class="col-sm-2"></div>
+
+                            </div>
+
+                         
+
+                            <div class="row my-3">
+
+                                <div class="col-sm-2"></div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-location-arrow fa-2x mb-3 prefix grey-text "><span class="trongthei">Place</span></i>
+                                    <input type="text" placeholder="Example:  Washington, D.C" id="form29" class="form-control validate" ng-model="item.NoiNhanHang">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-globe-americas fa-2x mb-3 prefix grey-text "><span class="trongthei">City Code</span></i>
+                                    <input type="number" placeholder="Example: 016" id="form29" class="form-control validate" ng-model="item.MaThanhPho">
+
+                                </div>
+
+                                <div class="col-sm-2"></div>
+
+                            </div>
+
+                            <div class="row my-3">
+
+                                <div class="col-sm-4"></div>
+
+                                <div class="col-sm-4">
+                                    <i class="fas fa-hand-holding-usd fa-2x mb-3 prefix grey-text "><span class="trongthei">Totals Money</span></i>
+                                    <input placeholder="Example: 500$" id="form29" class="form-control validate" value="{{item.SoLuong*item.DonGia}} $">
+                                </div>
+
+                                <div class="col-sm-4"></div>
+
+                            </div>
+
+
+                            <div class="row my-3">
+                                <div class="col-sm-12 text-sm-center">
+                                    <button class="btn btn-unique" ng-click="TaoMoiHoaDon()">Save Bill <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                    <button class="btn btn-cyan mt-1 waves-effect waves-light" data-dismiss="modal" aria-label="Close">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--End  Nút tạo mới và  from
+        <!-- Bảng Dữ Liệu-->
+
+        <div class="timkiem" style="float:right; margin-top: 1%;padding: 18px 20px;">
+            <input id="timkiem" ng-model="searchText" placeholder="Search..." style="border:none;border-bottom:1px solid #2BBBAD;float:left;outline:none;width:150px;"><i class="fas fa-search fa-2x"></i>
+        </div>
+
+        <table id="dtMaterialDesignExample" class="table table-striped" cellspacing="0">
+            <thead>
+                <tr>
+                    <th class="th-sm">
+                        ID Bill
+                    </th>
+
+                    <th class="th-sm">
+                        ID Customer
+                    </th>
+                    <th class="th-sm">
+                        ID Employee
+                    </th>
+                    <th class="th-sm">
+                        ID Product
+                    </th>
+                    <th class="th-sm">
+                        Product Name
+                    </th>
+
+                    <th class="th-sm">
+                        Action (Edit)
+                    </th>
+                    <th class="th-sm">
+                        Action (Delete)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr dir-paginate="hoadon in BangHoaDon| itemsPerPage: 5|filter:searchText">
+                    <td>{{hoadon.MaHoaDon}}</td>
+                    <td>{{hoadon.MaKhachHang}}</td>
+                    <td>{{hoadon.MaNhanVien}}</td>
+                    <td>{{hoadon.MaHang}}</td>
+                    <td>{{hoadon.TenHang}}</td>
+                    <td><button class="btn  btn-info" data-toggle="modal" data-target="#fromchinhsua" ng-click="LayThongTinHoaDon(hoadon)">Edit info</button></td>
+                    <td><button class="btn btn-deep-orange" ng-click=XoaHoaDon(hoadon)>Delete info</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <!--End Bảng Dữ Liệu-->
+        <!-- Phân Trang-->
+        <dir-pagination-controls boundary-links="true"
+                                 direction-links="true">
+        </dir-pagination-controls>
+        <p id="TongSo" style="display:inline-block; float:right;color: #2BBBAD;font-size: 25px; padding: 28px 25px;color: #2BBBAD;font-size: 20px;margin-top: 20px;margin-right: 10px;padding: 5px 11px;font-weight: 700;font-family: tahoma;border-bottom: 3px solid #2BBBAD;"></p>
+
+        <!-- End Phân Trang-->
+        <!-- from chỉnh sửa -->
+        <div class="sua">
+            <div class="modal fade" id="fromchinhsua" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class=" chinhsuanhe modal-dialog" role="document">
+                    <div class="modal-content" style="width: 80%;margin: auto;margin-top: 8%;">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">Info And Edit BILL</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="container-fluid">
+                                <div class="row  my-3">
+
+                                    <div class="col-sm-2"></div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-balance-scale fa-2x mb-3 prefix grey-text "><span class="trongthei">Quantity</span></i>
+                                        <input type="number" placeholder="Example: 1000" id="form29" class="form-control validate" ng-model="item.SoLuong">
+
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-dollar-sign fa-2x mb-3 prefix grey-text "><span class="trongthei">Unit Price</span></i>
+                                        <input type="number" placeholder=" Example: 25000$" id="form29" class="form-control validate" ng-model="item.DonGia">
+                                    </div>
+
+                                    <div class="col-sm-2"></div>
+
+                                </div>
+
+                                <div class="row my-3">
+
+                                    <div class="col-sm-2"></div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-calendar-alt fa-2x mb-3 prefix grey-text "><span class="trongthei">Purchase Date</span></i>
+                                        <input type="text" class="datepicker" ng-model="item.NgayMua" style=" width: 312px; outline: none; border: 1px solid #99999945; padding: 7px 10px; border-radius: 5px;">
+
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-calendar-alt fa-2x mb-3 prefix grey-text "><span class="trongthei">Shipping Date</span></i>
+                                        <input type="text" class="datepicker" ng-model="item.NgayVanChuyen" style=" width: 312px; outline: none; border: 1px solid #99999945; padding: 7px 10px; border-radius: 5px;">
+                                    </div>
+
+                                    <div class="col-sm-2"></div>
+
+                                </div>
+
+                                <div class="row my-3">
+
+                                    <div class="col-sm-2"></div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-calendar-check fa-2x mb-3 prefix grey-text "><span class="trongthei">Receive Date</span></i>
+                                        <input type="text" class="datepicker" ng-model="item.NgayNhanHang" style=" width: 312px; outline: none; border: 1px solid #99999945; padding: 7px 10px; border-radius: 5px;">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-location-arrow fa-2x mb-3 prefix grey-text "><span class="trongthei">Place</span></i>
+                                        <input type="text" placeholder="Example: Australia" id="form29" class="form-control validate" ng-model="item.NoiNhanHang" style=" width: 312px; outline: none; border: 1px solid #99999945; padding: 7px 10px; border-radius: 5px;">
+                                    </div>
+
+                                    <div class="col-sm-2"></div>
+
+                                </div>
+
+                                <div class="row my-3">
+
+                                    <div class="col-sm-2"></div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-globe-americas fa-2x mb-3 prefix grey-text "><span class="trongthei">City Code</span></i>
+                                        <input type="number" placeholder="Example: 016" id="form29" class="form-control validate" ng-model="item.MaThanhPho">
+
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <i class="fas fa-hand-holding-usd fa-2x mb-3 prefix grey-text "><span class="trongthei">Totals Money</span></i>
+                                        <input placeholder="Example: 500$" id="form29" class="form-control validate" value="{{item.SoLuong*item.DonGia}}">
+                                    </div>
+
+                                    <div class="col-sm-2"></div>
+
+                                </div>
+
+
+                                <div class="row my-3">
+                                    <div class="col-sm-12 text-sm-center">
+                                        <button class="btn btn-unique" ng-click="CapNhatHoaDon()">Save Bill <i class="fas fa-paper-plane-o ml-1"></i></button>
+                                        <button class="btn btn-cyan mt-1 waves-effect waves-light" data-dismiss="modal" aria-label="Close">Close</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="MDB-Free_4.7.3/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="MDB-Free_4.7.3/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="MDB-Free_4.7.3/js/mdb.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({ dateFormat : 'dd/mm/yy' });
+            
+        });
+
+    </script>
+
+</body>
+
+
+</html>
